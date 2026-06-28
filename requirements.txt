@@ -3,6 +3,7 @@ Flask-SQLAlchemy
 Flask-Login
 Flask-SocketIO
 Flask-Cors
+Flask-Bcrypt
 gevent
 gevent-websocket
 python-socketio
