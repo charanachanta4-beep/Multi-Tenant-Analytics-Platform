@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Developer | Multi Tenant</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/developer.css') }}">
+
+</head>
+
+<body>
+
+  <div class="sidebar">
+
+    <h1>Multi Tenant</h1>
+
+    <p>Mission Control</p>
+
+    <hr>
+
+    <a href="/dashboard">
+      Dashboard
+    </a>
+
+    <a href="/upload">
+      Upload CSV
+    </a>
+
+    <a class="active" href="/developer">
+      Developer
+    </a>
+
+    <a href="/logout">
+      Logout
+    </a>
+
+  </div>
+
+  <div class="content">
+
+    <div class="page-header">
+
+      <h1>
+
+        Developer Portal
+
+      </h1>
+
+      <p>
+
+        Manage your API access and integrations.
+
+      </p>
+
+    </div>
+
+    <div class="grid">
+
+      <!-- Workspace -->
+
+      <div class="card">
+
+        <h3>
+
+          Workspace
+
+        </h3>
+
+        <p>
+
+          {{ tenant.company }}
+
+        </p>
+
+      </div>
+
+      <!-- API Key -->
+
+      <div class="card">
+
+        <h3>
+
+          API Key
+
+        </h3>
+
+        <div class="code-box">
+
+          <code id="apikey">
+
+                    {{ tenant.api_key }}
+
+                </code>
+
+        </div>
+
+        <button onclick="copyAPI()">
+
+          Copy API Key
+
+        </button>
+
+      </div>
+
+      <!-- Webhook -->
+
+      <div class="card">
+
+        <h3>
+
+          Webhook Endpoint
+
+        </h3>
+
+        <div class="code-box">
+
+          <code id="endpoint">
+
+POST /api/v1/ingest
+
+</code>
+
+        </div>
+
+        <button onclick="copyEndpoint()">
+
+          Copy Endpoint
+
+        </button>
+
+      </div>
+
+      <!-- SDK -->
+
+      <div class="card wide">
+
+        <h3>
+
+          JavaScript SDK
+
+        </h3>
+
+        <pre>
+
+&lt;script src="https://your-domain.com/sdk/buildhub.js"&gt;&lt;/script&gt;
+
+</pre>
+
+        <pre>
+
+BuildHub.track({
+
+    revenue:2500,
+
+    visitors:350,
+
+    orders:25,
+
+    profit:950
+
+});
+
+</pre>
+
+      </div>
+
+      <!-- CURL -->
+
+      <div class="card wide">
+
+        <h3>
+
+          Example Request
+
+        </h3>
+
+        <pre>
+
+curl -X POST http://localhost:5000/api/v1/ingest \
+-H "Content-Type: application/json" \
+-d '{
+
+"api_key":"{{ tenant.api_key }}",
+
+"revenue":2500,
+
+"visitors":300,
+
+"orders":18,
+
+"profit":900
+
+}'
+
+</pre>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Test Webhook</h3>
+
+        <p>
+          Send sample analytics data to your dashboard.
+        </p>
+
+        <button onclick="sendTestData()">
+
+          🚀 Send Test Data
+
+        </button>
+
+      </div>
+
+      <!-- Regenerate -->
+
+      <div class="card wide">
+
+        <h3>Embed Dashboard</h3>
+
+        <p>
+          Embed your analytics dashboard into any website.
+        </p>
+
+        <div class="code-box">
+
+          <pre id="embedCode">
+&lt;div id="buildhub-dashboard"&gt;&lt;/div&gt;
+
+&lt;script src="http://127.0.0.1:5000/static/sdk/buildhub.js"&gt;&lt;/script&gt;
+
+&lt;script&gt;
+
+BuildHub.init({
+
+    apiKey:"{{ tenant.api_key }}",
+
+    width:"100%",
+
+    height:"700px"
+
+});
+
+&lt;/script&gt;
+</pre>
+
+        </div>
+
+        <button onclick="copyEmbedCode()">
+
+          📋 Copy Embed Code
+
+        </button>
+
+        <a href="/embed/{{ tenant.api_key }}" target="_blank">
+
+          <button>
+
+            👀 Preview Dashboard
+
+          </button>
+
+        </a>
+
+      </div>
+      <div class="card">
+
+        <h3>SDK Documentation</h3>
+
+        <ul>
+
+          <li>✔ Include buildhub.js</li>
+
+          <li>✔ Create a div with id <b>buildhub-dashboard</b></li>
+
+          <li>✔ Call <b>BuildHub.init()</b></li>
+
+          <li>✔ Pass your API Key</li>
+
+        </ul>
+
+      </div>
+      <div class="card">
+
+        <h3>API Documentation</h3>
+
+        <p>
+
+          Endpoint
+
+        </p>
+
+        <div class="code-box">
+
+          POST /api/v1/ingest
+
+        </div>
+
+        <p>
+
+          Content-Type
+
+        </p>
+
+        <div class="code-box">
+
+          application/json
+
+        </div>
+
+      </div>
+
+      <div class="card">
+
+        <h3>
+
+          Security
+
+        </h3>
+
+        <p>
+
+          Regenerate your API key anytime.
+
+        </p>
+
+        <form action="/developer/regenerate" method="POST">
+
+          <button class="danger">
+
+            Regenerate Key
+
+          </button>
+
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="{{ url_for('static', filename='js/developer.js') }}"></script>
+
+</body>
+
+</html>

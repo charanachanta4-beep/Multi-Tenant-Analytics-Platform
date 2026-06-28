@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <title>Profile</title>
+
+  <link rel="stylesheet" href="{{url_for('static',
+filename='css/profile.css')}}">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="top-header">
+
+      <a href="/dashboard" class="back-btn">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Dashboard
+
+      </a>
+
+      
+
+    </div>
+
+    <h1>
+
+      👤 My Profile
+
+    </h1>
+
+    <div class="profile-card">
+
+      <div class="avatar">
+
+        <i class="bi bi-person-circle"></i>
+
+      </div>
+
+      <h2>
+
+        {{tenant.company}}
+
+      </h2>
+
+      <p>
+
+        {{tenant.email}}
+
+      </p>
+
+      <hr>
+
+      <div class="info">
+
+        <div>
+
+          <h4>Uploads</h4>
+
+          <h3>{{uploads}}</h3>
+
+        </div>
+
+        <div>
+
+          <h4>Metrics</h4>
+
+          <h3>{{metrics}}</h3>
+
+        </div>
+
+        <div>
+
+          <h4>Workspace</h4>
+
+          <h3>Multi Tenant Analytics</h3>
+
+        </div>
+
+      </div>
+
+      <hr>
+
+      <label>
+
+        API Key
+
+      </label>
+
+      <input value="{{tenant.api_key}}" readonly>
+
+      <a href="/settings">
+
+        <button>
+
+          ⚙ Settings
+
+        </button>
+
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

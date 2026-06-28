@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <title>Reports</title>
+
+  <link rel="stylesheet" href="{{ url_for('static',
+          filename='css/reports.css') }}">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="top-header">
+
+      <a href="/dashboard" class="back-btn">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Dashboard
+
+      </a>
+    </div>
+
+    <h1>
+
+      📊 Reports
+
+    </h1>
+
+    <div class="cards">
+
+      <div class="card">
+
+        <h3>Total Revenue</h3>
+
+        <h2>
+
+          ₹{{"{:,.2f}".format(revenue)}}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Total Visitors</h3>
+
+        <h2>
+
+          {{visitors}}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Total Orders</h3>
+
+        <h2>
+
+          {{orders}}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h3>Total Profit</h3>
+
+        <h2>
+
+          ₹{{"{:,.2f}".format(profit)}}
+
+        </h2>
+
+      </div>
+
+    </div>
+
+    <hr>
+
+    <h2>
+
+      Business Summary
+
+    </h2>
+
+    <table>
+
+      <tr>
+
+        <td>Total Uploads</td>
+
+        <td>{{uploads}}</td>
+
+      </tr>
+
+      <tr>
+
+        <td>Average Revenue</td>
+
+        <td>
+
+          ₹{{"{:,.2f}".format(average_revenue)}}
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td>Average Profit</td>
+
+        <td>
+
+          ₹{{"{:,.2f}".format(average_profit)}}
+
+        </td>
+
+      </tr>
+
+      <tr>
+
+        <td>Best Revenue</td>
+
+        <td>
+
+          {% if best_day %}
+
+          ₹{{best_day.revenue}}
+
+          {% else %}
+
+          -
+
+          {% endif %}
+
+        </td>
+
+      </tr>
+
+    </table>
+
+    <br>
+
+    <div class="buttons">
+
+      <button id="pdfBtn">
+
+        📄 Export PDF
+
+      </button>
+
+      <button id="csvBtn">
+
+        📁 Export CSV
+
+      </button>
+
+      <button id="excelBtn">
+
+        📊 Export Excel
+
+      </button>
+
+    </div>
+
+  </div>
+
+  <script src="{{url_for('static',
+filename='js/reports.js')}}"></script>
+
+</body>
+
+</html>

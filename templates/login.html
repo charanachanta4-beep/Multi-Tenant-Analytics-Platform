@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Multi Tenant Login</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/auth.css') }}">
+
+</head>
+
+<body>
+
+  <div class="auth-card">
+
+    <div class="logo">
+
+      Multi Tenant
+
+    </div>
+
+    <p class="subtitle">
+
+      Analytics Platform
+
+    </p>
+
+    <p class="desc">
+
+      Turn your data into decisions.
+
+    </p>
+
+    <form method="POST">
+
+      <label>Email</label>
+
+      <input type="email" name="email" placeholder="hello@company.com" required>
+
+      <label>Password</label>
+
+      <input type="password" name="password" placeholder="••••••••" required>
+
+      <button>
+
+        ENTER WORKSPACE →
+
+      </button>
+
+    </form>
+
+    <div class="footer">
+
+      New here?
+
+      <a href="/register">
+
+        Create Workspace
+
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

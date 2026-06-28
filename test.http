@@ -1,0 +1,10 @@
+POST http://127.0.0.1:5000/api/v1/ingest
+Content-Type: application/json
+
+{
+    "api_key":"bh_live_uVFRHoF9E67EpCo9C44KM5oeMq8l9H1tBURPVLPL7Xw",
+    "revenue":5000,
+    "visitors":250,
+    "orders":18,
+    "profit":2200
+}

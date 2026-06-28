@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Create Workspace | Multi Tenant</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+</head>
+
+<body>
+
+  <div class="auth-card">
+
+    <div class="logo">
+
+      Multi Tenant
+
+    </div>
+
+    <p class="subtitle">
+
+      Create Workspace
+
+    </p>
+
+    <p class="desc">
+
+      Create your analytics workspace and start turning your data into insights.
+
+    </p>
+
+    <form method="POST">
+
+      <label>
+
+        Company Name
+
+      </label>
+
+      <input type="text" name="company" placeholder="Acme Inc." required>
+
+      <label>
+
+        Email Address
+
+      </label>
+
+      <input type="email" name="email" placeholder="hello@company.com" required>
+
+      <label>
+
+        Password
+
+      </label>
+
+      <input type="password" name="password" placeholder="Create a strong password" required>
+
+      <button>
+
+        CREATE WORKSPACE →
+
+      </button>
+
+    </form>
+
+    <div class="footer">
+
+      Already have an account?
+
+      <a href="/login">
+
+        Enter Workspace
+
+      </a>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>

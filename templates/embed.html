@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>{{ tenant.company }} Dashboard</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="{{ url_for('static',filename='css/embed.css') }}">
+
+</head>
+
+<body>
+
+
+  <div class="container">
+    <div class="top-header">
+
+      <a href="/dashboard" class="back-btn">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Dashboard
+
+      </a>
+
+
+
+    </div>
+
+    <div class="header">
+
+      <h1>
+
+        {{ tenant.company }}
+
+      </h1>
+
+      <p>
+
+        Embedded Analytics Dashboard
+
+      </p>
+
+    </div>
+
+    <div class="cards">
+
+      <div class="card">
+
+        <h4>Revenue</h4>
+
+        <h2 id="revenue">
+
+          ₹{{ "{:,.2f}".format(revenue) }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Visitors</h4>
+
+        <h2 id="visitors">
+
+          {{ visitors }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Orders</h4>
+
+        <h2 id="orders">
+
+          {{ orders }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h4>Profit</h4>
+
+        <h2 id="profit">
+
+          ₹{{ "{:,.2f}".format(profit) }}
+
+        </h2>
+
+      </div>
+
+    </div>
+
+    <div class="chart-card">
+
+      <canvas id="revenueChart"></canvas>
+
+    </div>
+
+  </div>
+
+  <script>
+
+    const labels = {{ labels| tojson}};
+
+    const revenueData = {{ revenue_values| tojson}};
+
+    const visitorsData = {{ visitors_values| tojson}};
+
+    const ordersData = {{ orders_values| tojson}};
+
+  </script>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <script src="{{ url_for('static',
+filename='js/embed.js') }}"></script>
+
+</body>
+
+</html>

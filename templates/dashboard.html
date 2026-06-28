@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Multi Tenant Analytics</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+  <nav class="top-navbar">
+
+    <div class="brand">
+
+      <i class="bi bi-building"></i>
+
+      <h2>Multi Tenant</h2>
+
+    </div>
+
+    <div class="nav-center">
+
+      <input type="text" placeholder="Search...">
+
+    </div>
+
+    <div class="nav-right">
+
+      <a href="{{ url_for('notifications.notifications') }}" class="nav-icon">
+
+        <i class="bi bi-bell"></i>
+
+      </a>
+
+      <a href="{{url_for('profile.profile')}}" class="user">
+
+
+        <i class="bi bi-person-circle"></i>
+
+        <span>
+
+          {{ current_user.company }}
+
+        </span>
+
+      </a>
+
+      <a href="{{ url_for('auth.logout') }}" class="logout-btn">
+
+        <i class="bi bi-box-arrow-right"></i>
+
+        Logout
+
+      </a>
+
+    </div>
+
+  </nav>
+  <div class="sidebar">
+
+    <a class="active" href="/dashboard">
+
+      <i class="bi bi-speedometer2"></i>
+
+      Dashboard
+
+    </a>
+
+    <a href="/upload">
+
+      <i class="bi bi-upload"></i>
+
+      CSV Upload
+
+    </a>
+
+    <a href="{{ url_for('developer.developer') }}">
+
+      <i class="bi bi-code-slash"></i>
+
+      Developer
+
+    </a>
+    <a href="{{url_for('reports.reports')}}">
+
+      <i class="bi bi-file-earmark-bar-graph"></i>
+
+      Reports
+
+    </a>
+
+    <a href="{{url_for('settings.settings')}}">
+
+      <i class="bi bi-gear"></i>
+
+      Settings
+
+    </a>
+
+    <a href="/logout">
+
+      <i class="bi bi-box-arrow-right"></i>
+
+      Logout
+
+    </a>
+
+  </div>
+
+  <div class="content">
+
+    <div class="topbar">
+
+      <div>
+
+        <h2>
+
+          Welcome,
+
+          {{ tenant.company }}
+
+        </h2>
+
+        <p>
+
+          {{ tenant.email }}
+
+        </p>
+
+      </div>
+
+    </div>
+
+    <!-- KPI -->
+
+    <div class="cards">
+
+      <div class="card">
+
+        <h5>Revenue</h5>
+
+        <h2 id="revenue">
+
+          ₹{{ "{:,.2f}".format(revenue) }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h5>Visitors</h5>
+
+        <h2 id="visitors">
+
+          {{ visitors }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h5>Orders</h5>
+
+        <h2 id="orders">
+
+          {{ orders }}
+
+        </h2>
+
+      </div>
+
+      <div class="card">
+
+        <h5>Profit</h5>
+
+        <h2 id="profit">
+
+          ₹{{ "{:,.2f}".format(profit) }}
+
+        </h2>
+
+      </div>
+
+    </div>
+
+    <!-- Charts -->
+
+    <div class="chart-grid">
+
+      <div class="chart-card">
+
+        <h4>Revenue Trend</h4>
+
+        <canvas id="revenueChart"></canvas>
+
+      </div>
+
+      <div class="chart-card">
+
+        <h4>Orders vs Visitors</h4>
+
+        <canvas id="comparisonChart"></canvas>
+
+      </div>
+
+    </div>
+
+    <!-- Upload History -->
+
+    <div class="section">
+
+      <h4>Recent Uploads</h4>
+
+      <table class="table table-hover">
+
+        <thead>
+
+          <tr>
+
+            <th>Filename</th>
+
+            <th>Type</th>
+
+            <th>Uploaded</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody>
+
+          {% for upload in uploads %}
+
+          <tr>
+
+            <td>{{ upload.filename }}</td>
+
+            <td>{{ upload.source_type }}</td>
+
+            <td>{{ upload.uploaded_at.strftime("%d %b %Y %I:%M %p") }}</td>
+
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+    <!-- Metrics -->
+
+    <div class="section">
+
+      <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <h4>Metrics</h4>
+
+        <input id="search" class="form-control w-25" placeholder="Search...">
+
+      </div>
+
+      <table class="table table-striped">
+
+        <thead>
+
+          <tr>
+
+            <th>Date</th>
+
+            <th>Revenue</th>
+
+            <th>Visitors</th>
+
+            <th>Orders</th>
+
+            <th>Profit</th>
+
+          </tr>
+
+        </thead>
+
+        <tbody id="metricsTable">
+
+          {% for row in metrics %}
+
+          <tr>
+
+            <td>{{ row.timestamp.strftime("%d %b %Y") }}</td>
+
+            <td>{{ row.revenue }}</td>
+
+            <td>{{ row.visitors }}</td>
+
+            <td>{{ row.orders }}</td>
+
+            <td>{{ row.profit }}</td>
+
+          </tr>
+
+          {% endfor %}
+
+        </tbody>
+
+      </table>
+
+      {% if metrics|length == 0 %}
+
+      <div class="alert alert-info">
+
+        No data uploaded yet.
+
+        Upload your first CSV to start analysing.
+
+      </div>
+
+      {% endif %}
+
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+
+  <script>
+    const labels = {{ labels| tojson}};
+    const revenueData = {{ revenue_values| tojson}};
+    const visitorsData = {{ visitors_values| tojson}};
+    const ordersData = {{ orders_values| tojson}};
+    const profitData = {{ profit_values| tojson}};
+  </script>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+</body>
+
+</html>

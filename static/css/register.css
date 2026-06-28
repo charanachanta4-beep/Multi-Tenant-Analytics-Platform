@@ -1,0 +1,25 @@
+@import url('login.css');
+
+.login-card{
+
+width:520px;
+
+}
+
+.logo{
+
+font-size:38px;
+
+}
+
+button{
+
+background:var(--green);
+
+}
+
+button:hover{
+
+background:#6CE585;
+
+}
